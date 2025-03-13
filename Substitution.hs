@@ -43,4 +43,22 @@ encryptSubstitiution key plaintext =
     let cipherMap = createCipherMap key
     in generateCipherTextFromMap plaintext cipherMap
 
+-- Invert a cipher map to create a decryption map
+invertCipherMap :: M.Map Char Char -> M.Map Char Char
+invertCipherMap = M.fromList . map (\(k, v) -> (v, k)) . M.toList
+
+-- Process ciphertext for decryption (preserve spaces and punctuation)
+decryptCipherText :: String -> M.Map Char Char -> String
+decryptCipherText cipherTxt decryptMap =
+    map (\c -> if isAlpha c 
+              then fromMaybe c (M.lookup (toUpper c) decryptMap)
+              else c) cipherTxt
+
+-- Main decryption function that works with both String and Int keys
+decryptSubstitution :: CipherInput p => p -> String -> String
+decryptSubstitution key ciphertext = 
+    let cipherMap = createCipherMap key
+        decryptMap = invertCipherMap cipherMap
+    in decryptCipherText ciphertext decryptMap
+
 
