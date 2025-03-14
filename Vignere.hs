@@ -1,9 +1,9 @@
-module Main where
+module Vignere where
 
 import Data.Char
 
 vigenereEncode :: String -> String -> String
-vigenereEncode key text = enc (cycle key) text
+vigenereEncode key = enc (cycle key)
   where
     enc _ [] = []
     enc (k:ks) (t:ts)
@@ -15,7 +15,7 @@ vigenereEncode key text = enc (cycle key) text
       in chr $ base + mod (ord t - base + offset) 26
 
 vigenereDecode :: String -> String -> String
-vigenereDecode key text = enc (cycle key) text
+vigenereDecode key = enc (cycle key)
   where
     enc _ [] = []
     enc (k:ks) (t:ts)
