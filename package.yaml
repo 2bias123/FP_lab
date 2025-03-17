@@ -17,7 +17,8 @@ dependencies:
   - parsec
   - random
   - template-haskell
-
+  - time  
+  
 library:
   source-dirs: lib
 
@@ -26,13 +27,13 @@ executables:
     main: Main.lhs
     source-dirs: exec
     dependencies:
-      - report
+      - classical-cryptography
 
 tests:
   simpletests:
     main: simpletests.lhs
     source-dirs: test
     dependencies:
-      - report
+      - classical-cryptography
       - QuickCheck
       - hspec

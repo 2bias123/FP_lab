@@ -1,20 +1,31 @@
 \documentclass[12pt,a4paper]{article}
 \input{latexmacros.tex}
 
-\title{My Report}
-\author{Me}
+\title{Classical Cryptography}
+\author{Tobias Innleggen, Andráas Zsolt Süutő, Azim Kazimli}
 \date{\today}
-\hypersetup{pdfauthor={Me}, pdftitle={My Report}}
+\hypersetup{pdfauthor={Tobias Innleggen, Andráas Zsolt Süutő, Azim Kazimli}, pdftitle={Classical Cryptography}}
+
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-We give a toy example of a report in \emph{literate programming} style.
-The main advantage of this is that source code and documentation can
-be written and presented next to each other.
-We use the listings package to typeset Haskell source code nicely.
+    This abstract still needs to be rewritten so this is a placeholder:
+    This is project explores the domain of classical cryptography by implementing and analyzing 
+    a selection of historical ciphers using the Haskell programming language. 
+    Our primary objective is to develop functional encoders and decoders for three classical ciphers: 
+    the Caesar cipher (or substitution cipher), the Vigen\`{e}re cipher, and the Playfair cipher, 
+    with the potential to expand this list based on time availability. 
+    Beyond implementation, we aim to design an automated cipher recognition system capable of 
+    identifying these encryption methods from ciphertext samples. Additionally, we will construct 
+    tools to automatically crack the implemented ciphers, leveraging cryptanalytic techniques to 
+    expose their vulnerabilities. 
+    Should time permit, we will apply these tools to solve cryptography assignments provided 
+    in the project description. 
+    This work seeks to deepen our understanding of classical cryptographic systems while 
+    showcasing Haskell’s suitability for such implementations and analyses.
 \end{abstract}
 
 \vfill
@@ -26,14 +37,30 @@ We use the listings package to typeset Haskell source code nicely.
 % We include one file for each section. The ones containing code should
 % be called something.lhs and also mentioned in the .cabal file.
 
-\input{Howto.tex}
 
-\input{lib/Basics.lhs}
+% Section 1 - Introduction
+\input{Introduction.tex}
 
+
+% Section 2 - Cipher implemenation
+\input{Implementation.tex}
+
+\input{lib/Substitution.lhs}
+
+\input{lib/Vignere.lhs}
+
+\input{lib/Playfair.lhs}
+
+% Section 3 - Cipher recognition
+\input{lib/CipherRecognition.lhs}
+
+% Section 4 - Attacks
 \input{exec/Main.lhs}
 
-\input{test/simpletests.lhs}
+% Section 5 - Tests
+\input{test/Tests.lhs}
 
+% Section 6 - Conclusion
 \input{Conclusion.tex}
 
 \addcontentsline{toc}{section}{Bibliography}

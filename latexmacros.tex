@@ -37,7 +37,11 @@
   aboveskip       = 2pt plus 1pt,
   belowskip       = 8pt plus 3pt
 }
-\lstnewenvironment{code}[0]{}{}
+\lstnewenvironment{code}[0]
+ {\vspace{0.5em}  % Add space before
+  \lstset{aboveskip=6pt, belowskip=8pt}
+ }
+ {\vspace{0.5em}} % Add space after
 
 % only shown, not compiled:
 \lstnewenvironment{showCode}[0]{\lstset{numbers=none}}{}
@@ -58,3 +62,11 @@
 \pdfinfoomitdate=1
 \pdftrailerid{}
 \pdfsuppressptexinfo15
+
+% Custom
+
+\usepackage{lmodern} 
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+
+

@@ -6,8 +6,5 @@ cradle:
     - path: "./exec/Main.lhs"
       component: "classical-cryptography:exe:myprogram"
 
-    - path: "./exec/Paths_classical-cryptography.hs"
-      component: "classical-cryptography:exe:myprogram"
-
     - path: "./test"
       component: "classical-cryptography:test:simpletests"
