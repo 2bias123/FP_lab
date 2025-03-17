@@ -103,7 +103,7 @@ main :: IO ()
 main = do
   putStrLn "Enter a keyword (letters only, J will be treated as I):"
   keyword <- getLine
-  putStrLn "Enter the message:"
+  putStrLn "Enter the message(example: together we can reach the end):"
   message <- getLine
   let cipherText = encrypt keyword message
   putStrLn $ "\nEncrypted message:\n" ++ cipherText
