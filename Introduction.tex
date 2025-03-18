@@ -1,4 +1,7 @@
 
 \section{Introduction}
 
-Here we talk about theory mostly, maybe cite some things like \cite{lamport1994latex}.
+
+Classical ciphers like Caesar, Vigen\`ere, and Playfair demonstrate the rich history and fundamental principles of cryptography\cite{banoth2023}, while also providing an opportunity to assess modern programming paradigms. In this project, we focus on applying Haskell’s functional approach to implement and break these ciphers: we design tools for automatically recognizing the encryption method (via frequency analysis, entropy metrics, and periodicity checks) and then apply tailored attacks. Notably, Vigen\`ere is attacked using the Friedman and Kasiski tests, and Playfair is targeted through guided search and heuristic improvements.
+
+We seek to determine how effectively functional patterns—from list comprehensions to higher-order functions—can simplify cryptographic implementation and cryptanalysis. Specifically, we measure the performance of our tools and the success rates of brute-force or frequency-based attacks, highlighting where Haskell’s immutable data structures and clear abstractions streamline even the more computationally heavy tasks. The upcoming sections describe each cipher, our recognition framework, and the methods used to recover plaintext.
