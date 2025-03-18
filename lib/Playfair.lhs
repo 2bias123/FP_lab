@@ -12,7 +12,7 @@ The core components of our implementation include:
   \item \textbf{Digram Generation:}  
         The normalized text is split into pairs (digrams) with the \texttt{makeDigrams} function. When duplicate letters occur within a pair, a filler (typically 'X') is inserted to ensure proper encryption.
   \item \textbf{Encryption and Decryption:}  
-        Depending on whether a pair of letters is in the same row, same column, or forms the corners of a rectangle in the table, we perform the appropriate substitution. This logic is implemented in the \texttt{encryptDigram} and \texttt{decryptDigram} functions, while the overall encryption and decryption are handled by the \texttt{encrypt} and \texttt{decrypt} functions.
+        Depending on whether a pair of letters is in the same row, same column, or forms the corners of a rectangle in the table, we perform the appropriate substitution. This logic is implemented in the \texttt{encryptDigram} and \texttt{decryptDigram} functions, while the overall encryption and decryption are handled by the \texttt{encryptPlayfair} and \texttt{decryptPlayfair} functions.
 \end{itemize}
 
 We begin with the module declaration:
@@ -120,18 +120,18 @@ decryptDigram table [a,b] =
 decryptDigram _ _ = error "Invalid digram length"
 \end{code}
 
-Finally, the overall \texttt{encrypt} and \texttt{decrypt} functions tie these components together:
+Finally, the overall \texttt{encryptPlayfair} and \texttt{decryptPlayfair} functions tie these components together:
 \begin{code}
-encrypt :: String -> String -> String
-encrypt keyword text =
+encryptPlayfair :: String -> String -> String
+encryptPlayfair keyword text =
   let tableFlat = createTable keyword
       table     = chunksOf 5 tableFlat
       prepared  = prepareText text
       digrams   = makeDigrams prepared
   in concatMap (encryptDigram table) digrams
 
-decrypt :: String -> String -> String
-decrypt keyword text =
+decryptPlayfair :: String -> String -> String
+decryptPlayfair keyword text =
   let tableFlat = createTable keyword
       table     = chunksOf 5 tableFlat
       digrams   = chunksOf 2 (prepareText text)
