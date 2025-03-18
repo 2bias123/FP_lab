@@ -8,12 +8,12 @@ This section (our main file) provides an interface for encoding and decoding mes
 module Main where
 
 import Vigenere
-import Substitution
+import SimpleCipher
 import Playfair
 
 import VigenereBreaker
 import PlayfairBreaker
-import SubstitutionBreaker
+import SimpleCipherBreaker
 
 
 main :: IO ()
@@ -22,8 +22,8 @@ main = do
   key <- getLine
   putStrLn "\nEnter the message to encode:"
   message <- getLine
-  let substitutionEncoded = encryptSubstitiution key message
-  let substitutionDecoded = decryptSubstitution key substitutionEncoded
+  let substitutionEncoded = encryptSimpleCipher key message
+  let substitutionDecoded = decryptSimpleCipher key substitutionEncoded
 
   let vignereEncoded = vigenereEncode key message
   let vignereDecoded = vigenereDecode key vignereEncoded

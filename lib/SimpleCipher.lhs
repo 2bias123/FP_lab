@@ -1,11 +1,11 @@
-\subsection{Substitution cipher}\label{sec:vignere}
+\subsection{Caesar and Keyword cipher}\label{sec:vignere}
 
 \hide{
 \begin{code}
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE InstanceSigs #-}
-module Substitution where
+module SimpleCipher where
 
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe, mapMaybe)
@@ -16,16 +16,6 @@ emptyMap :: M.Map Char Char
 emptyMap = M.empty
 \end{code}
 }
-
-\begin{itemize}
-\item General explanation of the cipher
-\item Explanation of the code
-    \begin{itemize}
-    \item Explain both of the key types
-    \item Explanation of the map construction
-    \item Explanation of the encryption and decryption functions
-    \end{itemize}
-\end{itemize}
 
 The substitution cipher is a way of encrypting where the units of the plaintext is replaced with cipher text. There are several diffrent kinds of substitution ciphers, but the one considered in this paper is the simple substitution cipher. this is a version of the substitution cipher that works on single letters. The two versions of the substitution cipher considered by this paper is a caesar cipher, taking an int as key value, and a version using a scrambled alphabet that uses a keyword as a key value. To accomodate diffrent cipher key formats in a uniform and maintable way the typeclass CipherInput was used. The CipherInput typeclass specifies that any type used as a cipher key must implement the create function. This allows for treating multiple cipher types unifomly, making use of haskell's polymorphism. 
 
@@ -61,7 +51,7 @@ instance CipherInput String where
 
 The \texttt{generateCipherTextFromMap} function transforms plaintext using a cipher mapping by filtering out non-alphabetic characters and replacing valid ones through \texttt{M.lookup}, which returns a \texttt{Maybe Char}. The use of \texttt{mapMaybe} ensures only successful lookups (\texttt{Just} values) are kept, while non-alphabetic or unmapped characters are discarded. The encrypted output is then formatted into five-character chunks omitting punctuation and spacesusing a recursive \texttt{chunk} function. This is done in order to disguise word boundaries from the plaintext as well as to help aviod transmission errors.
 
-The \texttt{encryptSubstitution} function orchestrates this by generating the cipher map with \texttt{createCipherMap} and passing it to \texttt{generateCipherTextFromMap}. Haskell's \texttt{Maybe} type makes this implementation safe by forcing explicit handling of missing values, preventing common lookup errors found in imperative languages.
+The \texttt{encryptSimpleCipher} function orchestrates this by generating the cipher map with \texttt{createCipherMap} and passing it to \texttt{generateCipherTextFromMap}. Haskell's \texttt{Maybe} type makes this implementation safe by forcing explicit handling of missing values, preventing common lookup errors found in imperative languages.
 
 \begin{code}
 generateCipherTextFromMap :: String -> M.Map Char Char -> String
@@ -73,13 +63,13 @@ chunk :: Int -> String -> [String]
 chunk _ [] = []
 chunk n str = take n str : chunk n (drop n str)
 
-encryptSubstitiution :: CipherInput p => p -> String -> String
-encryptSubstitiution key plaintext =
+encryptSimpleCipher :: CipherInput p => p -> String -> String
+encryptSimpleCipher key plaintext =
     let cipherMap = createCipherMap key
     in generateCipherTextFromMap plaintext cipherMap
 \end{code}
 
-The decryption process of a substitution cipher is straightforward, as it involves inverting the cipher map used for encryption. This is exactly what happens in the functions below. The main decryption function, \texttt{decryptSubstitution}, first generates the key map using \texttt{createCipherMap}, then inverts it using \texttt{invertCipherMap}, which swaps the keys and values by converting the map to a list of pairs with \texttt{M.toList}, mapping each \texttt{(k, v)} pair to \texttt{(v, k)}, and reconstructing a new map with \texttt{M.fromList}. This functional approach is both concise and efficient because it avoids explicit loops and operates in a single pass over the map structure. The \texttt{decryptCipherText} function then applies the decryption map while preserving spaces and punctuation, using \texttt{map} to iterate over the text and \texttt{fromMaybe} to handle unmapped characters safely. This ensures that decryption is expressive and declarative, leveraging Haskell's built-in higher-order functions and persistent data structures to process transformations in a clear and optimized manner without unnecessary state mutations.
+The decryption process of a substitution cipher is straightforward, as it involves inverting the cipher map used for encryption. This is exactly what happens in the functions below. The main decryption function, \texttt{decryptSimpleCipher}, first generates the key map using \texttt{createCipherMap}, then inverts it using \texttt{invertCipherMap}, which swaps the keys and values by converting the map to a list of pairs with \texttt{M.toList}, mapping each \texttt{(k, v)} pair to \texttt{(v, k)}, and reconstructing a new map with \texttt{M.fromList}. This functional approach is both concise and efficient because it avoids explicit loops and operates in a single pass over the map structure. The \texttt{decryptCipherText} function then applies the decryption map while preserving spaces and punctuation, using \texttt{map} to iterate over the text and \texttt{fromMaybe} to handle unmapped characters safely. This ensures that decryption is expressive and declarative, leveraging Haskell's built-in higher-order functions and persistent data structures to process transformations in a clear and optimized manner without unnecessary state mutations.
 
 \begin{code}
 -- Invert a cipher map to create a decryption map
@@ -94,8 +84,8 @@ decryptCipherText cipherTxt decryptMap =
               else c) cipherTxt
 
 -- Main decryption function that works with both String and Int keys
-decryptSubstitution :: CipherInput p => p -> String -> String
-decryptSubstitution key ciphertext =
+decryptSimpleCipher :: CipherInput p => p -> String -> String
+decryptSimpleCipher key ciphertext =
     let cipherMap = createCipherMap key
         decryptMap = invertCipherMap cipherMap
     in decryptCipherText ciphertext decryptMap

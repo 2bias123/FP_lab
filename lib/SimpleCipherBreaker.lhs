@@ -4,9 +4,9 @@
 
 \begin{code}
 
-module SubstitutionBreaker where
+module SimpleCipherBreaker where
 
-import Substitution
+import SimpleCipher
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe, mapMaybe)
 import Data.List ( nub, (\\) )
@@ -16,7 +16,7 @@ bruteforceSubstitution :: Int -> String -> [(Int, String)]
 bruteforceSubstitution iteration ciphertext
     |iteration > 26 = []
     |otherwise =
-        let plaintext = decryptSubstitution iteration ciphertext
+        let plaintext = decryptSimpleCipher iteration ciphertext
         in (iteration, plaintext) : bruteforceSubstitution (iteration + 1) ciphertext
 
 bruteforceCaesar :: String -> [(Int, String)]
