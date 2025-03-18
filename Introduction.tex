@@ -1,7 +1,20 @@
 
 \section{Introduction}
 
+The motivation behind this report is twofold. First, we aim to demonstrate that a functional language like Haskell can elegantly implement classical ciphers and their cryptanalysis. Second, we address a practical scenario: given an unknown piece of encrypted text, can we automatically determine the cipher used and subsequently crack it? 
 
-Classical ciphers like Caesar, Vigen\`ere, and Playfair demonstrate the rich history and fundamental principles of cryptography\cite{banoth2023}, while also providing an opportunity to assess modern programming paradigms. In this project, we focus on applying Haskell’s functional approach to implement and break these ciphers: we design tools for automatically recognizing the encryption method (via frequency analysis, entropy metrics, and periodicity checks) and then apply tailored attacks. Notably, Vigen\`ere is attacked using the Friedman and Kasiski tests, and Playfair is targeted through guided search and heuristic improvements.
+First we implement three classical ciphers:
 
-We seek to determine how effectively functional patterns—from list comprehensions to higher-order functions—can simplify cryptographic implementation and cryptanalysis. Specifically, we measure the performance of our tools and the success rates of brute-force or frequency-based attacks, highlighting where Haskell’s immutable data structures and clear abstractions streamline even the more computationally heavy tasks. The upcoming sections describe each cipher, our recognition framework, and the methods used to recover plaintext.
+\begin{itemize}
+    \item \textbf{Caesar cipher} is a simple monoalphabetic substitution cipher that shifts letters by a fixed offset; it was famously used by Julius Caesar and exemplifies the most basic substitution technique. 
+
+    \item \textbf{Vigen\`ere cipher} extends this idea using a keyword to vary the shift across the message, making it a polyalphabetic cipher that was once considered "le chiffre ind\'echiffrable" (the indecipherable cipher) due to its resistance to simple frequency analysis.
+
+    \item \textbf{Playfair cipher} is a digraph substitution cipher that encrypts pairs of letters using a 5x5 key matrix. This cypher mixes letter coordinates and thus complicates frequency patterns. \cite{banoth2023}
+\end{itemize}
+
+Caesar is trivial to break with brute force, Vigen\`ere requires analysis to uncover its repeating key, and Playfair demands strategic searching using a list of common words due to its larger key space. Both the ciphered text and the key are assumed to be in English.
+
+We built a \textbf{cipher recognition} mechanism that inspects an unknown ciphertext and infers which cipher produced it. We base this recognition on statistical features of the ciphertext, such asletter frequency distributions, entropy and coincidence measures and periodicity, as explained in Section \ref{sec:recognition}.
+
+We measure the success rate of our attacks by testing each cipher-breaking method on sample ciphertexts and checking if the correct plaintext (or key) is recovered. We also profile the performance (time complexity and efficiency) of the Haskell solutions. Another aspect of our evaluation is the \textit{ease of coding} and clarity of the solutions in Haskell. Throughout the project, we found that Haskell’s expressive features (like higher-order functions, list comprehensions, and immutable data structures) allowed us to write cryptographic algorithms in a concise manner.
