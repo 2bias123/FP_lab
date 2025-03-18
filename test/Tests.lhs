@@ -1,4 +1,3 @@
-
 \section{Tests}
 \label{sec:tests}
 
@@ -14,6 +13,17 @@ import Playfair
 
 import Test.Hspec
 import Test.QuickCheck
+
+-- Define the functions that are referenced in the tests
+somenumbers :: [Int]
+somenumbers = [1..10]
+
+funnyfunction :: Int -> Int
+funnyfunction n = n * 2
+
+myreverse :: [a] -> [a]
+myreverse [] = []
+myreverse (x:xs) = myreverse xs ++ [x]
 
 main :: IO ()
 main = hspec $ do
