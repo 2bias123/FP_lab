@@ -1,9 +1,12 @@
 \subsection{Substitution cipher}\label{sec:vignere}
 
-Explain code of cipher implementation in codeblocks, unhide important things from below
-
 \hide{
 \begin{code}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE InstanceSigs #-}
+module Substitution where
+
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe, mapMaybe)
 import Data.List ( nub, (\\) )
