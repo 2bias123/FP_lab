@@ -1,11 +1,11 @@
-\section{Attacks}\label{sec:Main}
 
-In this section we perform attacks on the ciphers implemented in \ref{sec:implementation}.
+\subsection{Attacks based on recognition}\label{sec:allattacks}
+This section should be the main code part, where attacks are done based on recognized cipher.
 
 \begin{code}
 module Main where
 
-import Vignere
+import Vigenere
 import Substitution
 import Playfair
 import PlayfairBreaker

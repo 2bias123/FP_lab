@@ -15,9 +15,9 @@
 \begin{abstract}
     In this project, we investigate the effectiveness of using Haskell
      in implementing and breaking classical ciphers. Our report focuses on three historically significant ciphers: the Caesar cipher, 
-    the Vigenére cipher, and the Playfair cipher. We develop automated methods to recognize which cipher has been used on a given ciphertext by analyzing statistical 
+    the Vigen\`ere cipher, and the Playfair cipher. We develop automated methods to recognize which cipher has been used on a given ciphertext by analyzing statistical 
     features such as letter frequencies, $n$-gram patterns, entropy, and periodicity. Based on the identified cipher, we then apply appropriate cryptanalytic attacks: 
-    brute-force key search for Caesar and Playfair, and a combination of the Friedman test, Kasiski examination, and frequency analysis for Vigenére. We evaluate the
+    brute-force key search for Caesar and Playfair, and a combination of the Friedman test, Kasiski examination, and frequency analysis for Vigen\`ere. We evaluate the
      success rate of these attacks and the performance of our Haskell implementations. 
       \textbf{(Final results will be inserted here upon completion, summarizing the accuracy and efficiency achieved.)}
     \end{abstract}
@@ -36,7 +36,7 @@
 
 \input{lib/Substitution.lhs}
 
-\input{lib/Vignere.lhs}
+\input{lib/Vigenere.lhs}
 
 \input{lib/Playfair.lhs}
 
@@ -44,7 +44,7 @@
 \input{lib/CipherRecognition.lhs}
 
 % Section 4 - Attacks
-\input{exec/Main.lhs}
+\input{Attacks.tex}
 
 % Section 5 - Tests
 \input{test/Tests.lhs}

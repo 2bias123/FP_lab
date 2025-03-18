@@ -1,45 +1,19 @@
+\subsection{Attack on Vigen\`ere Cipher}\label{sec:vignereattack}
 
-\subsection{Vignere cipher}\label{sec:vignere}
-
-Explain code of cipher implementation in codeblocks, unhide important things from below
-
-
+\hide{
 \begin{code}
-module Vignere where
+module VigenereBreaker where
 
 \end{code}
+}
 
 \hide{
 \begin{code}
 
+import Vigenere
 import Data.Char
 import Data.Time.Clock
 
-vigenereEncode :: String -> String -> String
-vigenereEncode key = enc (cycle key)
-  where
-    enc _ [] = []
-    enc [] _ = [] 
-    enc (k:ks) (t:ts)
-      | isAlpha t = shift k t : enc ks ts
-      | otherwise = t : enc ks ts
-    shift k t =
-      let base = if isUpper t then ord 'A' else ord 'a'
-          offset = ord (toUpper k) - ord 'A'
-      in chr $ base + mod (ord t - base + offset) 26
-
-vigenereDecode :: String -> String -> String
-vigenereDecode key = enc (cycle key)
-  where
-    enc _ [] = []
-    enc [] _ = [] 
-    enc (k:ks) (t:ts)
-      | isAlpha t = unshift k t : enc ks ts
-      | otherwise = t : enc ks ts
-    unshift k t =
-      let base = if isUpper t then ord 'A' else ord 'a'
-          offset = ord (toUpper k) - ord 'A'
-      in chr $ base + mod (ord t - base - offset) 26
 
 -- Caesar decryption for a single letter given a shift (0-25).
 caesarDecrypt :: Int -> Char -> Char
@@ -181,7 +155,6 @@ io = do
   let decoded = vigenereDecode key encoded
   putStrLn $ "Encoded : " ++ encoded
   putStrLn $ "Decoded : " ++ decoded
-
 
 
 attack :: IO ()

@@ -1,3 +1,5 @@
+\subsection{Attack on Playfair Cipher}\label{sec:playfairattack}
+
 \hide{
 \begin{code}
 module PlayfairBreaker where
