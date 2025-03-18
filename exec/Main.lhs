@@ -1,6 +1,8 @@
 
-\subsection{Attacks based on recognition}\label{sec:allattacks}
-This section should be the main code part, where attacks are done based on recognized cipher.
+\section{Running the program}\label{sec:main}
+
+This section (our main file) provides an interface for encoding and decoding messages using different cipher techniques, including Vigenère, Substitution, and Playfair ciphers. The program will prompt the user to enter a key and a message, then display the encoded and decoded results for each cipher method.
+
 
 \begin{code}
 module Main where
@@ -8,21 +10,34 @@ module Main where
 import Vigenere
 import Substitution
 import Playfair
+
+import VigenereBreaker
 import PlayfairBreaker
+import SubstitutionBreaker
+
 
 main :: IO ()
 main = do
-  putStrLn "Hello!"
+  putStrLn "\nEnter the key for the Vigenere cipher:"
+  key <- getLine
+  putStrLn "\nEnter the message to encode:"
+  message <- getLine
+  let substitutionEncoded = encryptSubstitiution key message
+  let substitutionDecoded = decryptSubstitution key substitutionEncoded
+
+  let vignereEncoded = vigenereEncode key message
+  let vignereDecoded = vigenereDecode key vignereEncoded
+
+  let playfairEncoded = encryptPlayfair key message
+  let playfairDecoded = decryptPlayfair key playfairEncoded
+
+  putStrLn $ "\nSubstitution encoded : " ++ substitutionEncoded
+  putStrLn $ "Substitution decoded : " ++ substitutionDecoded ++ "\n"
+
+  putStrLn $ "Vignere encoded : " ++ vignereEncoded
+  putStrLn $ "Vignere decoded : " ++ vignereDecoded ++ "\n"
+
+  putStrLn $ "Playfair encoded : " ++ playfairEncoded
+  putStrLn $ "Playfair decoded : " ++ playfairDecoded ++ "\n"
+
 \end{code}
-
-We can show the output with
-
-\begin{verbatim}
-Hello!
-Output, statistics, timings, encoded decoded results whatever:
-[1,2,3,4,5,6,7,8,9,10]
-[100,100,300,300,500,500,700,700,900,900]
-[1,3,0,1,1,2,8,0,6,4]
-[100,300,42,100,100,100,700,42,500,300]
-GoodBye
-\end{verbatim}

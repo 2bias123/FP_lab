@@ -87,8 +87,8 @@ decryptDigram table [a,b] =
 decryptDigram _ _ = error "Invalid digram length"
 
 -- | Encrypt an entire message using the Playfair cipher.
-encrypt :: String -> String -> String
-encrypt keyword text =
+encryptPlayfair :: String -> String -> String
+encryptPlayfair keyword text =
   let tableFlat = createTable keyword
       table     = chunksOf 5 tableFlat
       prepared  = prepareText text
@@ -96,8 +96,8 @@ encrypt keyword text =
   in concatMap (encryptDigram table) digrams
 
 -- | Decrypt an entire ciphertext using the Playfair cipher.
-decrypt :: String -> String -> String
-decrypt keyword text =
+decryptPlayfair :: String -> String -> String
+decryptPlayfair keyword text =
   let tableFlat = createTable keyword
       table     = chunksOf 5 tableFlat
       digrams   = chunksOf 2 (prepareText text)
@@ -126,7 +126,7 @@ scoreText text = sum [ countOccurrences bigram text | bigram <- commonBigrams ]
 -- | Try all candidate keywords (from a list) and choose the decryption with the best score.
 bruteForceDecrypt :: [String] -> String -> (String, String, Int)
 bruteForceDecrypt keys cipherText =
-  let candidateDecryptions = [ (kw, decrypt kw cipherText) | kw <- keys ]
+  let candidateDecryptions = [ (kw, decryptPlayfair kw cipherText) | kw <- keys ]
       scored = [ (kw, plain, scoreText plain) | (kw, plain) <- candidateDecryptions ]
       -- We assume the candidate with the highest score is most likely correct.
       bestCandidate = maximumBy (comparing (\(_,_,score) -> score)) scored
