@@ -10,7 +10,7 @@ module CaesarAndKeywordCipher where
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe, mapMaybe)
 import Data.List ( nub, (\\) )
-import Data.Char (isAlpha,  toUpper)
+import Data.Char (isAlpha,  toUpper, toLower)
 
 emptyMap :: M.Map Char Char
 emptyMap = M.empty
@@ -80,7 +80,7 @@ invertCipherMap = M.fromList . map (\(k, v) -> (v, k)) . M.toList
 decryptCipherText :: String -> M.Map Char Char -> String
 decryptCipherText cipherTxt decryptMap =
     map (\c -> if isAlpha c
-              then fromMaybe c (M.lookup (toUpper c) decryptMap)
+              then fromMaybe c (M.lookup (toLower c) decryptMap)
               else c) cipherTxt
 
 -- Main decryption function that works with both String and Int keys

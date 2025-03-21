@@ -18,6 +18,7 @@ dependencies:
   - random
   - template-haskell
   - time  
+  - deepseq
   
 library:
   source-dirs: lib
